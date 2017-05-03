@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas{
+            border: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+<canvas width="800" height="600" id="can"></canvas>
+</body>
+</html>
+<script src ='js/util.js'></script>
+<script src ='js/sky.js'></script>
+<script src ='js/land.js'></script>
+<script src ='js/pipe.js'></script>
+<script src ='js/bird.js'></script>
+<script src ='js/gameScene.js'></script>
+<script src ='js/overScene.js'></script>
+
+<script>
+    var can =document.getElementById('can');
+    var ctx =can.getContext('2d');
+    util.loadImage({
+        bird:'imgs/bird.png',
+        land:'imgs/land.png',
+        sky:'imgs/sky.png',
+        pipeDown:'imgs/pipeDown.png',
+        pipeUp:'imgs/pipeUp.png',
+    },function (imgObj) {
+
+//        根据图片设置画布的宽高
+            can.width = imgObj.sky.width;
+            can.height = imgObj.sky.height;
+
+            //创建游戏开始场景
+
+            var gameScene = getGameScene( ctx, imgObj );
+
+            //创建游戏结束场景
+
+            var overScene = getOverScene(ctx);
+
+            // 游戏场景是否继续
+            var isRun = true;
+
+            // 添加小鸟死亡的听众
+            gameScene.addListener( function() {
+                isRun = false; // 游戏场景退场
+                overScene.draw(); // 结束场景切入
+            } );
+
+            // 切入游戏场景，开始游戏
+            (function run() {
+                gameScene.draw();
+                if ( isRun ) {
+                    requestAnimationFrame( run );
+                }
+            }());
+
+
+//        //--->创建背景实例
+//        var sky1 =new Sky(ctx,imgObj.sky);
+//        var sky2 =new Sky(ctx,imgObj.sky);
+//
+//        //--->创建鸟的实例
+//        var bird =new Bird(ctx,imgObj.bird,3,1,10,10);
+//
+//        //--->创建大地实例
+//        var land1 = new Land(ctx,imgObj.land,3);
+//        var land2 = new Land(ctx,imgObj.land,3);
+//        var land3 = new Land(ctx,imgObj.land,3);
+//        var land4 = new Land(ctx,imgObj.land,3);
+
+//        //----> 创建管道
+////        ctx,imgDown,imgUp,space,landHeight,minHeight,speed
+//        var pipe1 = new Pipe(ctx,imgObj.pipeDown,imgObj.pipeUp,130,imgObj.land.height,20,3);
+//        var pipe2 = new Pipe(ctx,imgObj.pipeDown,imgObj.pipeUp,130,imgObj.land.height,20,3);
+//        var pipe3 = new Pipe(ctx,imgObj.pipeDown,imgObj.pipeUp,130,imgObj.land.height,20,3);
+//        var pipe4 = new Pipe(ctx,imgObj.pipeDown,imgObj.pipeUp,130,imgObj.land.height,20,3);
+//        var pipe5 = new Pipe(ctx,imgObj.pipeDown,imgObj.pipeUp,130,imgObj.land.height,20,3);
+//        var pipe6 = new Pipe(ctx,imgObj.pipeDown,imgObj.pipeUp,130,imgObj.land.height,20,3);
+
+
+//        //开启定时器让整幅图动起来
+//        var timer =setInterval(function () {
+//
+//            var birCenX =bird.x + bird.width/2 ;
+//            var birCenY =bird.y + bird.height/2 ;
+//
+//            // 游戏是否结束
+//            if( ctx.isPointInPath(birCenX,birCenY)
+//                || birCenY<0
+//                || birCenY>(ctx.canvas.height - imgObj.land.height)
+//
+//            ){
+//                console.log(birCenX,birCenY);
+//                console.log(ctx.canvas.height - imgObj.land.height);
+//                clearInterval(timer);
+//
+//                //游戏结束
+//                ctx.fillStyle = 'rgba(100,100,100,0.8)';
+//                ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height );
+//
+//                ctx.textAlign='center';
+//                ctx.textBaseline = 'middle';
+//                ctx.fillStyle ='red';
+//                ctx.font='900 40px Microsoft Yahei';
+//                ctx.fillText('GAME OVER !!!',ctx.canvas.width/2,ctx.canvas.height/2);
+//
+//                return;
+//            };
+//
+//
+//            sky1.draw();
+//            sky1.update();
+//
+//            sky2.draw();
+//            sky2.update();
+//
+//
+//
+//
+//
+//            ctx.beginPath();
+//            pipe1.draw();
+//            pipe1.update();
+//            pipe2.draw();
+//            pipe2.update();
+//            pipe3.draw();
+//            pipe3.update();
+//            pipe4.draw();
+//            pipe4.update();
+//            pipe5.draw();
+//            pipe5.update();
+//            pipe6.draw();
+//            pipe6.update();
+//
+//            land1.draw();
+//            land1.update();
+//            land2.draw();
+//            land2.update();
+//            land3.draw();
+//            land3.update();
+//            land4.draw();
+//            land4.update();
+//
+//            bird.draw();
+//            bird.update();
+//
+//        },20)
+
+
+
+        
+    })
+</script>
